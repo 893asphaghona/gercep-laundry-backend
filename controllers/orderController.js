@@ -6,8 +6,10 @@ exports.getOrders = async (req, res) => {
         const orders = await Order.findAll();
         res.status(200).json(orders);
     } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
+      console.error('Error occurred while adding order:', error);  // Menampilkan error secara rinci di server log
+      res.status(500).json({ message: error.message, stack: error.stack });
+  }
+  
 };
 
 exports.addOrder = async (req, res) => {
