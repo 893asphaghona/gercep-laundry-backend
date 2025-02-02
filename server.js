@@ -27,7 +27,7 @@ const orderRoutes = require('./routes/orderRoutes');
 
 
 // Menggunakan rute
-app.use('/api', authRoutes); // Rute untuk autentikasi
+app.use('/api/auth', authRoutes); // Rute untuk autentikasi
 app.use('/api/karyawan', karyawanRoutes); // Rute untuk data karyawan
 app.use('/api/services', servicesRoutes);
 app.use('/api',orderRoutes); // Menggunakan routes untuk orders
