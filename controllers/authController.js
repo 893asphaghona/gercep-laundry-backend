@@ -4,6 +4,7 @@ const User = require('../models/userModel'); // Sesuaikan impor
 
 // Login
 const loginUser = async (req, res) => {
+  console.log('Received login data:', req.body);
     const { email, password } = req.body;
 
     try {
