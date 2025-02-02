@@ -8,7 +8,7 @@ const port = process.env.PORT || 5001;
 
 // Middleware
 app.use(cors({
-  origin: "https://gercep-laundry-frontend-git-main-ricardos-projects-9caccf22.vercel.app/", // Alamat frontend
+  origin: "https://gercep-laundry-frontend.vercel.app", // Alamat frontend
   credentials: true, // Agar session dikirimkan
 }));
 app.use(express.json());
