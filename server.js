@@ -30,7 +30,7 @@ const orderRoutes = require('./routes/orderRoutes');
 app.use('/api/auth', authRoutes); // Rute untuk autentikasi
 app.use('/api/karyawan', karyawanRoutes); // Rute untuk data karyawan
 app.use('/api/services', servicesRoutes);
-app.use('/api',orderRoutes); // Menggunakan routes untuk orders
+app.use('/api/orders',orderRoutes); // Menggunakan routes untuk orders
 
 // Sinkronisasi database dan menjalankan server
 sequelize.sync({ alter: true })
