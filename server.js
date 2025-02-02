@@ -4,7 +4,7 @@ const session = require('express-session');
 const sequelize = require('./config/connection'); // Koneksi Sequelize
 
 const app = express();
-const port = 5001;
+const port = process.env.PORT || 5001;
 
 // Middleware
 app.use(cors({
@@ -37,7 +37,7 @@ sequelize.sync({ alter: true })
   .then(() => {
     console.log('Database synchronized');
     app.listen(port, () => {
-      console.log(`Server running on http://localhost:${port}`);
+      console.log(`Server running on ${port}`);
     });
   })
   .catch((error) => {
