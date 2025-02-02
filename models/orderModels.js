@@ -40,7 +40,7 @@ const Order = sequelize.define('Order', {
         allowNull: false
     },
     status_pesanan: {
-        type: DataTypes.ENUM('pending', 'selesai', 'batal'),
+        type: DataTypes.ENUM('pending', 'selesai', 'antar-jemput'),
         defaultValue: 'pending'
     },
     berat_pakaian: {

@@ -4,7 +4,7 @@ const Karyawan = require('../models/modelKaryawan');
 const getKaryawan = async (req, res) => {
   try {
     const karyawan = await Karyawan.findAll();
-    const karyawanData = karyawan.map(karyawan => karyawan.dataValues);  // Ambil dataValues agar mudah dibaca
+    const karyawanData = karyawan.map(karyawan => karyawan.dataValues);  
     res.json(karyawanData);
   } catch (error) {
     console.error(error);
