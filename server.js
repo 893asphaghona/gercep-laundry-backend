@@ -4,7 +4,7 @@ const session = require('express-session');
 const sequelize = require('./config/connection'); // Koneksi Sequelize
 
 const app = express();
-const port = process.env.PORT || 5001;
+const port = 5001;
 
 // Middleware
 app.use(cors({
