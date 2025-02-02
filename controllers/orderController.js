@@ -13,52 +13,79 @@ exports.getOrders = async (req, res) => {
 };
 
 exports.addOrder = async (req, res) => {
-    const {
-        nama,
-        no_whatsapp,
-        alamat,
-        jenis_layanan,
-        detail_layanan,
-        waktu_pengerjaan,
-        tanggal_pesanan,
-        berat_pakaian,
-        status_pesanan
-    } = req.body;
+  const {
+      nama,
+      no_whatsapp,
+      alamat,
+      jenis_layanan,
+      detail_layanan,
+      waktu_pengerjaan,
+      tanggal_pesanan,
+      berat_pakaian,
+      status_pesanan
+  } = req.body;
 
-    try {
+  try {
+      // Log data yang diterima
       console.log('Received data:', req.body);
-        if (berat_pakaian <= 0) {
-            return res.status(400).json({ message: 'Berat pakaian harus lebih dari 0' });
-        }
+      
+      // Validasi berat pakaian
+      if (berat_pakaian <= 0) {
+          return res.status(400).json({ message: 'Berat pakaian harus lebih dari 0' });
+      }
 
-        const layanan = jenis_layanan === 'normal'
-            ? await LaundryNormal.findOne({ where: { nama_layanan: detail_layanan } })
-            : await LaundrySatuan.findOne({ where: { nama_layanan: detail_layanan } });
+      // Cek apakah layanan ditemukan
+      const layanan = jenis_layanan === 'normal'
+          ? await LaundryNormal.findOne({ where: { nama_layanan: detail_layanan } })
+          : await LaundrySatuan.findOne({ where: { nama_layanan: detail_layanan } });
 
-        if (!layanan) {
-            return res.status(404).json({ message: 'Layanan tidak ditemukan' });
-        }
+      // Log untuk mengecek apakah layanan ditemukan
+      console.log('Layanan ditemukan:', layanan);
 
-        const total_harga = berat_pakaian * layanan.harga;
+      if (!layanan) {
+          return res.status(404).json({ message: 'Layanan tidak ditemukan' });
+      }
 
-        const newOrder = await Order.create({
-            nama,
-            no_whatsapp,
-            alamat,
-            jenis_layanan,
-            detail_layanan,
-            waktu_pengerjaan,
-            tanggal_pesanan,
-            total_harga,
-            status_pesanan,
-            berat_pakaian
-        });
+      // Hitung total harga
+      const total_harga = berat_pakaian * layanan.harga;
 
-        res.status(201).json(newOrder);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
+      // Log data yang akan dimasukkan ke tabel pesanan
+      console.log('Data yang akan dimasukkan ke pesanan:', {
+          nama,
+          no_whatsapp,
+          alamat,
+          jenis_layanan,
+          detail_layanan,
+          waktu_pengerjaan,
+          tanggal_pesanan,
+          total_harga,
+          status_pesanan,
+          berat_pakaian
+      });
+
+      // Masukkan pesanan ke database
+      const newOrder = await Order.create({
+          nama,
+          no_whatsapp,
+          alamat,
+          jenis_layanan,
+          detail_layanan,
+          waktu_pengerjaan,
+          tanggal_pesanan,
+          total_harga,
+          status_pesanan,
+          berat_pakaian
+      });
+
+      // Kirim response
+      res.status(201).json(newOrder);
+  } catch (error) {
+      // Log error
+      console.error('Error saat menambahkan pesanan:', error);
+      res.status(500).json({ message: error.message });
+  }
 };
+
 
 //edit
 exports.updateOrder = async (req, res) => {
