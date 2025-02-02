@@ -2,8 +2,7 @@
 const db = require("../config/connection");
 const User = require('../models/userModel'); // Sesuaikan impor
 
-const bcrypt = require("bcryptjs"); // Ganti dengan bcryptjs
-
+// Login
 const loginUser = async (req, res) => {
     const { email, password } = req.body;
 
@@ -11,9 +10,8 @@ const loginUser = async (req, res) => {
         const user = await User.findOne({ where: { email } });
         if (!user) return res.status(404).json({ msg: "User tidak ditemukan" });
 
-        // Cek password terenkripsi
-        const passwordMatch = await bcrypt.compare(password, user.password);
-        if (!passwordMatch) {
+        // Cek langsung password dari database
+        if (password !== user.password) {
             return res.status(400).json({ msg: "Password salah" });
         }
 
@@ -31,7 +29,6 @@ const loginUser = async (req, res) => {
         res.status(500).json({ msg: "Terjadi kesalahan pada server" });
     }
 };
-
 
 
 
