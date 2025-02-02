@@ -26,6 +26,7 @@ exports.addOrder = async (req, res) => {
     } = req.body;
 
     try {
+      console.log('Received data:', req.body);
         if (berat_pakaian <= 0) {
             return res.status(400).json({ message: 'Berat pakaian harus lebih dari 0' });
         }
