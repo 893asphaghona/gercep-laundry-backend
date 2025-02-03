@@ -12,7 +12,7 @@ const Order = sequelize.define('Order', {
         allowNull: false
     },
     no_whatsapp: {
-        type: DataTypes.STRING(11),
+        type: DataTypes.STRING(15),
         allowNull: false
     },
     alamat: {
